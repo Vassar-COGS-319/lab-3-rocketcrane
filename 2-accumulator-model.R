@@ -15,8 +15,39 @@
 # these parameters more intuitive by taking 1/rate.1 and 1/rate.2 as the values to rexp().
 
 accumulator.model <- function(samples, rate.1=40, rate.2=40, criterion=3){
+  theNumber.1 <- 0 # accumulator 1
+  theNumber.2 <- 0 # accumulator 2
+  howMany <- 0 # number of samples
   
-
+  # initialize arrays
+  accuracy.array <- numeric()
+  rt.array <- numeric()
+  
+  # repeat for number of samples
+  for (i in 1:samples) {
+    theNumber.1 <- 0 # start walk.1 at 0
+    theNumber.2 <- 0 # start walk.1 at 0
+    howMany <- 0 # start counter at 0
+    
+    # one sample
+    while ((theNumber.1 <= criterion) && (theNumber.2 <= criterion)) {
+      theNumber.1 <- (theNumber.1 + rexp(1, rate.1)) # add to "theNumber.1," to keep track of walk
+      theNumber.2 <- (theNumber.2 + rexp(1, rate.2)) # add to "theNumber.1," to keep track of walk
+      howMany <- (howMany + 1) # increment counter by 1
+    }
+    
+    # output correct or not
+    if(theNumber.1 >= criterion || theNumber.1 >= theNumber.2) {
+      accuracy.array[i] <- TRUE
+    }
+    else {
+      accuracy.array[i] <- FALSE
+    }
+    
+    # output how many
+    rt.array[i] <- howMany
+  }
+  
   output <- data.frame(
     correct = accuracy.array,
     rt = rt.array
@@ -31,7 +62,7 @@ accumulator.model <- function(samples, rate.1=40, rate.2=40, criterion=3){
 # 1000 samples and about half of the samples should be correct. the average rt will probably
 # be around 112, but might vary from that by a bit.
 
-initial.test <- accumulator.model(1000)
+initial.test <- accumulator.model(10000)
 sum(initial.test$correct) / length(initial.test$correct) # should be close to 0.5
 mean(initial.test$rt) # should be about 112
 
