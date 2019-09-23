@@ -118,11 +118,28 @@ mean(acccorrect.data$rt)
 mean(accincorrect.data$rt)
 
 
+
+# QUESTIONS ####
 # Can both models do a reasonable job of accounting for the mean RT and accuracy? Report the
 # results of your efforts:
 
+#---------------------------
+# Yes. both models can get pretty close. The accumulator model doesn't seem to be able to
+# have the correct mean be greater than the incorrect mean while having accuracy at 80%. The correct
+# and incorrect designations are arbitrary though, and we should be able to switch the correct and
+# and incorrect outputs to get the desired results.
+# There's always some variability in the samples though.
+#---------------------------
 
 # Using the parameters that you found above, plot histograms of the distribution of RTs
 # predicted by each model. Based on these distributions, what kind of information could
 # we use to evaluate which model is a better descriptor of the data for the experiment?
 # Describe briefly how you might make this evaluation.
+
+hist(walkcorrect.data$rt)
+hist(acccorrect.data$rt)
+
+#---------------------------
+# The accumulator model should be a better descriptor because it's less skewed, and more like a
+# normal distribution.
+#---------------------------
